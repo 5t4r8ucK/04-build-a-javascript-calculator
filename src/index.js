@@ -1,14 +1,17 @@
 // React
 import React from 'react';
 import ReactDOM from 'react-dom';
-// CSS
-import './index.css';
 // Components
 import App from './components/App';
+// Fonts
+import FontStyles from './components/styled-components/fontStyles';
+// CSS
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
+    <FontStyles />
     <App />
   </React.StrictMode>,
-  document.getElementById('main-wrapper')
+  document.getElementById('root')
 );
