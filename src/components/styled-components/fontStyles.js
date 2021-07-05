@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-
 import Digital_Dream_Woff from '../../assets/fonts/Digital-Dream/Digitaldream.woff';
 import Digital_Dream_Woff2 from '../../assets/fonts/Digital-Dream/Digitaldream.woff2';
 
