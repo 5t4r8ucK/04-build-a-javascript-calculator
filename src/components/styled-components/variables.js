@@ -1,4 +1,3 @@
-
 // Fonts
 export const font_stack_digital = '"Digital dream", monospace';
 export const font_stack_sans_serif = '"Jura", sans-serif';
@@ -18,8 +17,9 @@ export const cyan_dark_100 = 'rgba(19, 147, 180, 1)';
 export const blue_dark_100 = 'rgba(5, 15, 27, 1)';
 export const gray_100 = 'rgba(134, 150, 174, 1)';
 export const orange_100 = 'rgba(174, 106, 35, 1)';
+
 // Measurements
-export const gap_width = '1.75rem'; // 28 px
+export const gap_width = '1rem'; // 16 px
 export const hairline_width = '0.0625rem'; // 1 px
 export const border_width = '0.125rem';// 2 px
 export const button_border_radius = '0.3125rem'; // 5 px
