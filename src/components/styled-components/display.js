@@ -12,6 +12,7 @@ const Display = styled.div`
     inset calc((${variables.gap_width}) / 2 * (-1)) calc((${variables.gap_width}) / 2 * (-1)) 0 ${variables.black_10},
     inset calc((${variables.gap_width}) / 2) calc((${variables.gap_width}) / 2 * (-1)) 0 ${variables.black_10},
     inset calc((${variables.gap_width}) / 2 * (-1)) calc((${variables.gap_width}) / 2) 0 ${variables.black_10};
+  grid-area: screen;
   grid-area: display;
   height: calc((${variables.gap_width}) * 2 + (4rem));
   width: 100%;

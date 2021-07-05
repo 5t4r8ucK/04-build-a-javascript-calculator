@@ -17,7 +17,7 @@ const Calculator = styled.div`
   gap: ${variables.gap_width};
   grid-template-areas:
     'name'
-    'display'
+    'screen'
     'keypad';
   height: auto;
   padding: ${variables.gap_width};
