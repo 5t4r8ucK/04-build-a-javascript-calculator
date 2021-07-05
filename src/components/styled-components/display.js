@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import * as variables from './variables.js';
+import Numbers from './numbers.js';
 
 const Display = styled.div`
   // Positioning
