@@ -1,6 +1,4 @@
-// React
-import React from 'react';
-// Styled Components
+import React, {useState} from 'react';
 import Wrapper from './styled-components/wrapper.js';
 import Calculator from './styled-components/calculator.js';
 import Name from './styled-components/name.js';
@@ -10,6 +8,14 @@ import KeyPad from './styled-components/keyPad.js';
 import Button from './styled-components/button.js';
 
 function App() {
+  // Display State
+  const initialState = {
+    result: '0',
+    formula: ''
+  }
+  const [result, setResult] = useState(initialState.result);
+  const [formula, setFormula] = useState(initialState.formula);
+
   return (
     <Wrapper id='wrapper'>
       <Calculator id='calculator'>
