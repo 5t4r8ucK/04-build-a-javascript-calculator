@@ -2,10 +2,11 @@ import styled from 'styled-components';
 import * as variables from './variables.js';
 import Numbers from './numbers.js';
 
-const Display = styled.div`
+const DisplayContainer = styled.div`
   // Positioning
   position: relative;
   // Display and Box Model
+  align-items: flex-end;
   background-color: ${variables.blue_dark_100};
   border-radius: ${variables.button_border_radius};
   box-shadow: // black frame around the display
@@ -13,12 +14,17 @@ const Display = styled.div`
     inset calc((${variables.gap_width}) / 2 * (-1)) calc((${variables.gap_width}) / 2 * (-1)) 0 ${variables.black_10},
     inset calc((${variables.gap_width}) / 2) calc((${variables.gap_width}) / 2 * (-1)) 0 ${variables.black_10},
     inset calc((${variables.gap_width}) / 2 * (-1)) calc((${variables.gap_width}) / 2) 0 ${variables.black_10};
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
   grid-area: screen;
-  grid-area: display;
-  height: calc((${variables.gap_width}) * 2 + (4rem));
-  width: 100%;
+  height: auto;
+  justify-self: center;
+  justify-content: center;
+  padding: ${variables.gap_width};
+  width: calc((${variables.column_width} * 4) + (${variables.gap_width} * 3) - (${variables.border_width} * 2)); //4 buttons + 3 gaps - 2 border
   // Typography
-  font-size: 1.71rem;
+  font-size: 1.745rem;
   // Other
 
   &:before { // indent
@@ -35,7 +41,7 @@ const Display = styled.div`
     border-color: ${variables.black_100};
     border-width: ${variables.border_width};
     border-radius: 0.375rem; // 6px
-    outline: ${variables.white_100} solid ${variables.border_width};
+    outline: ${variables.white_50} solid ${variables.hairline_width};
     // Typography
     // Other
     content: '';
@@ -48,6 +54,7 @@ const Display = styled.div`
     position: absolute;
     right: 0px;
     top: 0px;
+    z-index: 3;
     // Display and Box Model
     background:
       linear-gradient(
@@ -61,5 +68,17 @@ const Display = styled.div`
     content: '';
   }
 `
+
+const Display = ({result, formula}) => {
+
+  return (
+    <DisplayContainer id='screen'>
+      <Numbers id='formula'>
+      </Numbers>
+      <Numbers id='display'>
+      </Numbers>
+    </DisplayContainer>
+  );
+};
 
 export default Display;
