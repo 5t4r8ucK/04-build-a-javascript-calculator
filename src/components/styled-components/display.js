@@ -74,8 +74,10 @@ const Display = ({result, formula}) => {
   return (
     <DisplayContainer id='screen'>
       <Numbers id='formula'>
+        {formula}
       </Numbers>
       <Numbers id='display'>
+        {result}
       </Numbers>
     </DisplayContainer>
   );
