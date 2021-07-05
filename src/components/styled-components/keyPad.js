@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import * as variables from './variables.js';
+import StyledButton from './button.js';
+import buttonContent from '../../assets/buttonContent.js';
 
-const KeyPad = styled.div`
+const KeyPadContainer = styled.div`
   // Positioning
   // Display and Box Model
   display: grid;
@@ -17,5 +19,26 @@ const KeyPad = styled.div`
   // Typography
   // Other
 `
+const KeyPad = ({result, setResult, formula, setFormula}) => {
+
+
+  const buttons = buttonContent.map((button) => {
+    return (
+      <StyledButton
+        id={button.id}
+        key={button.id}
+        color={button.color}
+      >
+        {button.symbol}
+      </StyledButton>
+    )
+  });
+
+  return (
+    <KeyPadContainer id='keypad'>
+      {buttons}
+    </KeyPadContainer>
+  );
+};
 
 export default KeyPad;

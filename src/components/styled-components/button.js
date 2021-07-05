@@ -1,18 +1,16 @@
-// Styled Components
 import styled, { css } from 'styled-components';
-//
 import * as variables from './variables.js';
 
 const handleColorType = (color) => {
   switch (color) {
-    case "gray":
+    case 'gray':
       return (
         css`
           color: ${variables.white_100};
           background-color: ${variables.black_50};
         `
       )
-    case "orange":
+    case 'orange':
       return (
         css`
           color: ${variables.black_100};
@@ -24,6 +22,101 @@ const handleColorType = (color) => {
         css`
           color: ${variables.black_100};
           background-color: ${variables.white_100};
+        `
+      )
+  }
+};
+
+const handleId = (id) => {
+  switch (id) {
+    case 'clear':
+      return (
+        css`
+          grid-area: clear;
+        `
+      )
+    case 'divide':
+      return (
+        css`
+          grid-area: divide;
+        `
+      )
+    case 'multiply':
+      return (
+        css`
+          grid-area: multiply;
+        `
+      )
+    case 'subtract':
+      return (
+        css`
+          grid-area: subtract;
+        `
+      )
+    case 'seven':
+      return (
+        css`
+          grid-area: seven;
+        `
+      )
+    case 'eight':
+      return (
+        css`
+          grid-area: eight;
+        `
+      )
+    case 'nine':
+      return (
+        css`
+          grid-area: nine;
+        `
+      )
+    case 'add':
+      return (
+        css`
+          grid-area: add;
+        `
+      )
+    case 'four':
+      return (
+        css`
+          grid-area: four;
+        `
+      )
+    case 'one':
+      return (
+        css`
+          grid-area: one;
+        `
+      )
+    case 'two':
+      return (
+        css`
+          grid-area: two;
+        `
+      )
+    case 'three':
+      return (
+        css`
+          grid-area: three;
+        `
+      )
+    case 'equals':
+      return (
+        css`
+          grid-area: equals;
+        `
+      )
+    case 'zero':
+      return (
+        css`
+          grid-area: zero;
+        `
+      )
+    case 'decimal':
+      return (
+        css`
+          grid-area: decimal;
         `
       )
   }
@@ -44,113 +137,7 @@ const StyledButton = styled.button`
   font-weight: 500;
 
   ${({ color }) => handleColorType(color)};
-
-
-  &#clear {
-    // Positioning
-    // Display and Box Model
-    grid-area: clear;
-    // Typography
-    // Other
-  }
-  &#divide {
-    // Positioning
-    // Display and Box Model
-    grid-area: divide;
-    // Typography
-    // Other
-  }
-  &#multiply {
-    // Positioning
-    // Display and Box Model
-    grid-area: multiply;
-    // Typography
-    // Other
-  }
-  &#subtract {
-    // Positioning
-    // Display and Box Model
-    grid-area: subtract;
-    // Typography
-    // Other
-  }
-  &#seven {
-    // Positioning
-    // Display and Box Model
-    grid-area: seven;
-    // Typography
-    // Other
-  }
-  &#eight {
-    // Positioning
-    // Display and Box Model
-    grid-area: eight;
-    // Typography
-    // Other
-  }
-  &#nine {
-    // Positioning
-    // Display and Box Model
-    grid-area: nine;
-    // Typography
-    // Other
-  }
-  &#add {
-    // Positioning
-    // Display and Box Model
-    grid-area: add;
-    // Typography
-    // Other
-  }
-  &#four {
-    // Positioning
-    // Display and Box Model
-    grid-area: four;
-    // Typography
-    // Other
-  }
-  &#one {
-    // Positioning
-    // Display and Box Model
-    grid-area: one;
-    // Typography
-    // Other
-  }
-  &#two {
-    // Positioning
-    // Display and Box Model
-    grid-area: two;
-    // Typography
-    // Other
-  }
-  &#three {
-    // Positioning
-    // Display and Box Model
-    grid-area: three;
-    // Typography
-    // Other
-  }
-  &#equals {
-    // Positioning
-    // Display and Box Model
-    grid-area: equals;
-    // Typography
-    // Other
-  }
-  &#zero {
-    // Positioning
-    // Display and Box Model
-    grid-area: zero;
-    // Typography
-    // Other
-  }
-  &#decimal {
-    // Positioning
-    // Display and Box Model
-    grid-area: decimal;
-    // Typography
-    // Other
-  }
+  ${({ id }) => handleId(id)};
 `
 
 export default StyledButton;
