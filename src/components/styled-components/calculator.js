@@ -3,6 +3,7 @@ import * as variables from './variables.js';
 
 const Calculator = styled.div`
   // Positioning
+  z-index: 0;
   // Display and Box Model
   background-color: ${variables.gray_100};
   border-radius: ${variables.calculator_border_radius};
@@ -20,8 +21,9 @@ const Calculator = styled.div`
     'screen'
     'keypad';
   height: auto;
-  padding: ${variables.gap_width};
-  width: calc((${variables.column_width} * 4) + (${variables.gap_width} * 5) + (${variables.border_width} * 2));
+  justify-content: center;
+  padding: ${variables.column_width};
+  width: calc((${variables.column_width} * 4) + (${variables.gap_width} * 3) + (${variables.column_width} * 2) + (${variables.border_width} * 2)); //4 buttons + 3 gaps + 2 padding + 2 border
   // Typography
   // Other
 `
