@@ -24,15 +24,13 @@ const parseMath = (expression) => { // ...or just save yourself the headache rei
   const parseMultiplication = (expression) => {
     const numbersString = expression.split('×');
     const numbers = numbersString.map(num => parseFloat(num));
-    const initialValue = numbers[0];
-    const result = numbers.slice(1).reduce((acc, num) => acc * num, initialValue);
+    const result = numbers.reduce((acc, num) => acc * num);
     return result;
   }
   const parseDivision = (expression) => {
     const numbersString = expression.split('÷');
     const numbers = numbersString.map(num => parseMultiplication(num));
-    const initialValue = numbers[0];
-    const result = numbers.slice(1).reduce((acc, num) => acc / num, initialValue);
+    const result = numbers.reduce((acc, num) => acc / num);
     return result;
   }
   const parseSubtraction = (expression) => {
@@ -52,14 +50,13 @@ const parseMath = (expression) => { // ...or just save yourself the headache rei
     if (isNaN(initialValue)) {
       initialValue = 0; // subtract from 0 if the first number is negative (used only if you manually use parseMath in the console)
     }
-    const result = numbers.slice(1).reduce((acc, num) => acc - num, initialValue); // exclude the first number as it's already been used
+    const result = numbers.reduce((acc, num) => acc - num); // exclude the first number as it's already been used
     return result;
   }
   const parseAddition = (expression) => {
     const numbersString = expression.split('+');
     const numbers = numbersString.map(num => parseSubtraction(num));
-    const initialValue = numbers[0];
-    const result = numbers.slice(1).reduce((acc, num) => acc + num, initialValue);
+    const result = numbers.reduce((acc, num) => acc + num);
     return result;
   }
   const result = parseAddition(expression);
