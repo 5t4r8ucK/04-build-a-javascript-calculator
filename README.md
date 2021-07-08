@@ -87,3 +87,4 @@ Once you're done, submit the URL to your working project with all its tests pass
 ## Credits
 
 This calculator uses a modified version of the parser described in [this Medium article](https://medium.com/@stoopidguy1992/how-to-write-a-math-expression-parser-in-javascript-b5147bc9466b).
+For button animations [read this article](https://www.joshwcomeau.com/animation/3d-button/).
