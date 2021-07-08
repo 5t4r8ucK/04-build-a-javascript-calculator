@@ -11,5 +11,6 @@ const Wrapper = styled.section`
   justify-content: center;
   // Typography
   // Other
+  //perspective: 3000px;
 `
 export default Wrapper;

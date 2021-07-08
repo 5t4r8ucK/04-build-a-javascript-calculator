@@ -26,5 +26,6 @@ const Calculator = styled.div`
   width: calc((${variables.column_width} * 4) + (${variables.gap_width} * 3) + (${variables.column_width} * 2) + (${variables.border_width} * 2)); //4 buttons + 3 gaps + 2 padding + 2 border
   // Typography
   // Other
+  //transform: rotateX(20deg);
 `
 export default Calculator;
