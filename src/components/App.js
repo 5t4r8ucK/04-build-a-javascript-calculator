@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Wrapper from './styled-components/wrapper.js';
 import Calculator from './styled-components/calculator.js';
 import Name from './styled-components/name.js';
-import Display from './styled-components/display.js';
+import Screen from './styled-components/screen.js';
 import KeyPad from './styled-components/keyPad.js';
 
 function App() {
@@ -18,7 +18,7 @@ function App() {
     <Wrapper id='wrapper'>
       <Calculator id='calculator'>
         <Name id='name'>Calculator</Name>
-        <Display
+        <Screen
           result={result}
           formula={formula}
         />
