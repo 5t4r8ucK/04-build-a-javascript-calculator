@@ -19,55 +19,87 @@ const KeyPadContainer = styled.div`
   // Typography
   // Other
 `
-const parseMath = (expression) => { // ...or just save yourself the headache reinventing the wheel and use Math.js
+const parseMath = expression => { // ...or just save yourself the headache reinventing the wheel and use Math.js
+  const parseMultiplication = input =>
+    input.split('×')
+      .map(parseDivision)
+      .reduce((acc, num) => acc * num);
 
-  const parseMultiplication = (expression) => {
-    const numbersString = expression.split('×');
-    const numbers = numbersString.map(num => parseFloat(num));
-    const result = numbers.reduce((acc, num) => acc * num);
-    return result;
-  }
-  const parseDivision = (expression) => {
-    const numbersString = expression.split('÷');
-    const numbers = numbersString.map(num => parseMultiplication(num));
-    const result = numbers.reduce((acc, num) => acc / num);
-    return result;
-  }
-  const parseSubtraction = (expression) => {
-    let numbersString = [];
-    let numbers = 0;
-    if (!(expression.includes('×-') || expression.includes('÷-')) && !(expression.includes('--'))) {
-      numbersString = expression.split('-'); // if no division/multiplication by a negative number is found
-      numbers = numbersString.map(num => parseDivision(num));
-    } else if (expression.includes('--')) {
-      numbersString = numbersString.concat(expression.replace('--', '+')) // if subtracting a negative number
-      numbers = numbersString.map(num => parseAddition(num));
+  const parseDivision = input =>
+    input.split('÷')
+      .map(parseFloat)
+      .reduce((acc, num) => acc / num);
+
+  const parseSubtraction = input => {
+    if (input.includes('--')) {
+      return parseAddition(input.replace('--', '+'));
+    } else if (!input.includes('×-') && !input.includes('÷-')) {
+      const numbersString = input.split('-'); // if no division/multiplication by a negative number is found
+      // If the first string is empty then it was the start of a negative number
+      if (numbersString[0].length === 0) {
+        numbersString.splice(0, 1);
+        numbersString[0] = '-' + numbersString[0];
+      }
+      return numbersString.map(parseMultiplication)
+        .reduce((acc, num) => acc - num);
     } else {
-      numbersString = numbersString.concat(expression); // if dividing/multiplying by a negative number
-      numbers = numbersString.map(num => parseDivision(num));
+      return parseMultiplication(input);
     }
-    let initialValue = numbers[0];
-    if (isNaN(initialValue)) {
-      initialValue = 0; // subtract from 0 if the first number is negative (used only if you manually use parseMath in the console)
-    }
-    const result = numbers.reduce((acc, num) => acc - num); // exclude the first number as it's already been used
-    return result;
   }
-  const parseAddition = (expression) => {
-    const numbersString = expression.split('+');
-    const numbers = numbersString.map(num => parseSubtraction(num));
-    const result = numbers.reduce((acc, num) => acc + num);
-    return result;
-  }
-  const result = parseAddition(expression);
-  return result;
+
+  const parseAddition = input =>
+    input.split('+')
+      .map(parseSubtraction)
+      .reduce((acc, num) => acc + num);
+
+  return parseAddition(expression);
 }
+
+const parseMathNew = expression => {
+  const operators = ['+', '-', '÷', '×'];
+
+  const characters = expression.split('');
+  let stack = [];
+  let lastIsNum = false;
+  for (let i = 0; i < characters.length; i++) {
+    const char = characters[i];
+    if (char === '-') {
+      lastIsNum = !lastIsNum
+      stack.push(char);
+    } else if (operators.includes(char)) {
+      stack.push(char);
+      lastIsNum = false;
+    } else if (lastIsNum) {
+      stack[stack.length - 1] += char;
+    } else {
+      stack.push(char);
+      lastIsNum = true;
+    }
+  }
+
+  stack = stack.map(x => operators.includes(x) ? x : parseFloat(x));
+
+  const parse = (op, calc) => {
+    for (let i = 0; i < stack.length; i++) {
+      if (stack[i] === op) {
+        stack.splice(i - 1, 3, calc(stack[i - 1], stack[i + 1]));
+      }
+    }
+  };
+
+  parse('÷', (a, b) => a / b);
+  parse('×', (a, b) => a * b);
+  parse('-', (a, b) => a - b);
+  parse('+', (a, b) => a + b);
+
+  return stack[0];
+};
 
 const KeyPad = ({result, setResult, formula, setFormula}) => {
 
   const operators = ['+','-','÷','×'];
-  const isLastSymbolOperator = operators.some(el => formula.slice(-1).includes(el));
-  const isNextToLastSymbolOperator = operators.some(el => formula.slice(-2, -1).includes(el));
+  const lastFormulaCharacter = formula[formula.length - 1];
+  const isNextToLastSymbolOperator = operators.includes(formula[formula.length - 2]);
 
   const handleClick = (symbol) => {
     switch (symbol) {
@@ -86,7 +118,7 @@ const KeyPad = ({result, setResult, formula, setFormula}) => {
       case '9':
         if (result === '0') {
           setResult(symbol); // remove the leading 0 and replace it with the number
-        } else if (formula.slice(-1).includes('=')) {
+        } else if (lastFormulaCharacter === '=') {
           setFormula(''); // clear the formula screen
           setResult(symbol); // start a new calculation
         } else {
@@ -94,16 +126,12 @@ const KeyPad = ({result, setResult, formula, setFormula}) => {
         }
         break;
       case '.':
-        if (result.split('').filter(el => el === '.').length < 1) {
+        if (!result.includes('.')) {
           setResult(result + symbol); // only concat one decimal point to the number
         }
         break;
       case '0':
-        if (result === '0') {
-          setResult(symbol); // there can only be one... 0
-        } else if (result.includes('.')) {
-          setResult(result + symbol); // ...but more if one decimal point exists
-        } else {
+        if (result !== '0') {
           setResult(result + symbol); // concat the 0 to the current result if the result is a number other than 0
         }
         break;
@@ -111,27 +139,29 @@ const KeyPad = ({result, setResult, formula, setFormula}) => {
       case '-':
       case '÷':
       case '×':
-        if (result.length === 0 && isLastSymbolOperator && symbol !== '-' && !isNextToLastSymbolOperator) {
-          setFormula(formula.slice(0, -1) + symbol); // replace the last operator in the formula with the most recent one (excluding -)
-        } else if (formula.slice(-1).includes('=')) {
+        if (result.length === 0 && symbol !== '-' && !isNextToLastSymbolOperator) {
+          setFormula(formula.slice(0, -1) + symbol); // replace the last operator (excluding -) with the most recent one
+        } else if (lastFormulaCharacter === '=') {
           setFormula(result + symbol); // replace the formula with the result to start a new calculation on the result
         } else if (result.length === 0 && isNextToLastSymbolOperator) {
           setFormula(formula.slice(0, -2) + symbol); // if there exists two consecutive operators in a row replace all with most recent one
+        } else if (symbol === '-' && result === '0' && formula.length === 0) {
+          // If the result is 0 then this is the start of a negative number
+          setFormula('-');
         } else {
           setFormula(formula + result + symbol); // concat the number and the operator to the formula screen
         }
         setResult(''); // clear the result screen
         break;
       case '=':
-        let output = 0;
-        if (result.length === 0 && isLastSymbolOperator || formula.includes('=')) {
-          setFormula(formula.slice(0, -1) + symbol); // if the operator is the last element replace it with equals // if equals exists don't concat another
-          output = formula.slice(0, -1); // get the current formula (excluding the equals)
-        } else {
-          setFormula(formula + result + symbol); // concat the number and operator to the formula screen
-          output = formula + result; // get the current formula
+        // Only calculate if there's a result and we're not showing a completed calculation already
+        if (result.length !== 0 && lastFormulaCharacter !== '=') {
+          const output = formula + result; // get the current formula
+          setFormula(output + '=');
+          setResult(parseMath(output).toString());
         }
-        setResult(parseMath(output));
+        break;
+      default:
         break;
     }
   }
@@ -144,7 +174,12 @@ const KeyPad = ({result, setResult, formula, setFormula}) => {
         color={button.color}
         onClick={() => handleClick(button.symbol)}
       >
-        {button.symbol}
+        <span className='front'>
+          {button.symbol}
+        </span>
+        <span className='edge'></span>
+        <span className='shadow'></span>
+        <span className='hole'></span>
       </StyledButton>
     )
   });
