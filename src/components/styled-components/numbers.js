@@ -10,7 +10,7 @@ const handleId = (id) => {
           // Display and Box Model
           min-height: 2rem;
           // Typography
-          font-size: 1.048rem;
+          font-size: 1.075rem;
           line-height: 2rem;
           // Other
 
@@ -30,7 +30,7 @@ const handleId = (id) => {
           // Display and Box Model
           min-height: 4rem;
           // Typography
-          font-size: inherit;
+          font-size: 1.8rem;
           line-height: 4rem;
           // Other
 
@@ -50,13 +50,14 @@ const Numbers = styled.p`
   // Positioning
   z-index: 2;
   // Display and Box Model
+  display: flex;
+  justify-content: flex-end; // aligns before placeholders and text to the right
   margin: 0;
   overflow: hidden;
   width: 100%;
   // Typography
-  color: ${variables.cyan_100};
+  color: ${variables.colors.cyan.hue};
   font-family: ${variables.font_stack_digital};
-  font-size: inherit;
   font-weight: 400;
   text-align: end;
   text-shadow:
@@ -71,7 +72,7 @@ const Numbers = styled.p`
     z-index: 1;
     // Display and Box Model
     display: block;
-    opacity: 0.1;
+    opacity: 0.025;
     // Typography
     // Other
   }
